@@ -18,6 +18,9 @@
     <None Update="2PasswordPhilosophy\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="4PassportProcessing\input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="3TobogganTrajectory\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -3,4 +3,5 @@ using AdventOfCode2020;
 
 ////ReportRepairSolution.Solve();
 ////PasswordPhilosophySolution.Solve();
-TobogganTrajectorySolution.Solve();
+////TobogganTrajectorySolution.Solve();
+PassportProcessingSolution.Solve();
