@@ -1,45 +1,46 @@
-﻿namespace AdventOfCode2021
+﻿namespace AdventOfCode2021;
+
+internal class SonarSweepSolution : IChallenge
 {
-  internal static class SonarSweepSolution
+  IEnumerable<int> inputList;
+
+  public SonarSweepSolution()
   {
-    public static void Solve()
+    inputList = File.ReadAllLines("1SonarSweep/input.txt").Select(x => int.Parse(x.Trim()));
+  }
+
+  public string Title => "--- Day 1: Sonar Sweep ---";
+
+  public DateTime DateTime => new(2021, 12, 1);
+
+  public string SolvePart1()
+  {
+    var count = 0;
+    inputList.Aggregate(int.MaxValue, (x, y) =>
     {
-      var inputList = File.ReadAllLines("1SonarSweep/input.txt").Select(x => int.Parse(x.Trim()));
-      var count = 0;
-      inputList.Aggregate(int.MaxValue, (x, y) =>
-      {
-        if (y > x)
-          count++;
+      if (y > x)
+        count++;
 
-        return y;
-      });
+      return y;
+    });
 
-      Console.WriteLine($"Solution First Part {count}");
+    return count.ToString();
+  }
 
-      count = 0;
-      var tripleSumInput = inputList.Select((x, index) =>
-      {
-        var second = inputList.ElementAtOrDefault(index + 1);
-        var third = inputList.ElementAtOrDefault(index + 2);
-        if (second == 0)
-          second = inputList.ElementAtOrDefault(index - 1);
+  public string SolvePart2()
+  {
+    //// this will create an array +2 items more than expected but last itmes will get the same value as last value
+    var tripleSumInput = inputList.Select((x, index) => x + inputList.ElementAtOrDefault(index + 1) + inputList.ElementAtOrDefault(index + 2));
 
-        if (third == 0)
-          third = inputList.ElementAtOrDefault(index - 2);
-        return x + second + third;
-      });
+    var count = 0;
+    tripleSumInput.Aggregate(int.MaxValue, (x, y) =>
+    {
+      if (y > x)
+        count++;
 
-      tripleSumInput = tripleSumInput.ToArray()[0..^2];
+      return y;
+    });
 
-      tripleSumInput.Aggregate(int.MaxValue, (x, y) =>
-      {
-        if (y > x)
-          count++;
-
-        return y;
-      });
-
-      Console.WriteLine($"Solution Second Part {count}");
-    }
+    return count.ToString();
   }
 }

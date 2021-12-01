@@ -1,3 +1,4 @@
 ﻿using AdventOfCode2021;
 
-SonarSweepSolution.Solve();
+ChallengeRunner.RunChallenge(new SonarSweepSolution());
+//SonarSweepSolution.Solve();
