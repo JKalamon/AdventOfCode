@@ -9,10 +9,14 @@
 
   <ItemGroup>
     <PackageReference Include="morelinq" Version="3.3.2" />
+    <PackageReference Include="TextCopy" Version="4.3.1" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="1SonarSweep\input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="2Dive\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\ChristmasTree3.txt">

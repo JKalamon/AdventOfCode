@@ -8,6 +8,6 @@ internal interface IChallenge
 
   string SolvePart1();
 
-  string SolvePart2();
+  string? SolvePart2();
 }
 

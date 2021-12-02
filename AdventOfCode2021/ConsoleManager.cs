@@ -68,9 +68,6 @@ namespace AdventOfCode2021
 
     public static void WriteResult(string result, int resultNumber = 1)
     {
-      if (string.IsNullOrWhiteSpace(result))
-        return;
-
       Console.SetCursorPosition(Console.BufferWidth / 2 + 4, StartLineY + (resultNumber * 2));
       Console.ForegroundColor = resultNumber == 1 ? ConsoleColor.Yellow : ConsoleColor.DarkCyan;
       Console.WriteLine($"Result for part {resultNumber}: {result}");
