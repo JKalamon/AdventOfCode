@@ -16,6 +16,9 @@
     <None Update="1SonarSweep\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="3BinaryDiagnostic\input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="2Dive\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

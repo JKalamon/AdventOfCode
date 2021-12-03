@@ -4,7 +4,7 @@ namespace AdventOfCode2021;
 
 internal class DiveSolution : IChallenge
 {
-  public string Title => "--- Day 2: Dive!---";
+  public string Title => "--- Day 2: Dive! ---";
 
   public DateTime DateTime => new(2021, 12, 2);
 
