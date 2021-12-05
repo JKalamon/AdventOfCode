@@ -1,5 +1,4 @@
-﻿using MoreLinq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -24,20 +23,6 @@ namespace AdventOfCode2021
 
     record Line(Point Start, Point End, bool IgnoreDiagonals = true)
     {
-      public bool PointIsOccupied(Point point)
-      {
-        if (IgnoreDiagonals && !IsVertical && !IsHorizontal)
-          return false;
-
-        if (IsVertical && point.Y == Start.Y && NumberInRange(Start.X, End.X, point.X))
-          return true;
-
-        if (IsHorizontal && point.X == Start.X && NumberInRange(Start.Y, End.Y, point.Y))
-          return true;
-
-        return false;
-      }
-
       public IEnumerable<Point> GetAffectedPoints()
       {
         if (IgnoreDiagonals && !IsVertical && !IsHorizontal)
@@ -73,18 +58,6 @@ namespace AdventOfCode2021
       public bool IsVertical => Start.X == End.X;
 
       public bool IsHorizontal => Start.Y == End.Y;
-
-      public bool NumberInRange(int start, int end, int point)
-      {
-        if (start > end)
-        {
-          var tmp = start;
-          start = end;
-          end = tmp;
-        }
-
-        return start <= point && point <= end;
-      }
     }
 
     public string SolvePart1()
