@@ -1,24 +1,28 @@
-﻿using TextCopy;
+﻿using System;
+using System.IO;
+using TextCopy;
 
-namespace AdventOfCode2021;
-
-internal static class ChallengeRunner
+namespace AdventOfCode2021
 {
-  public static void RunChallenge(IChallenge challenge)
+  internal static class ChallengeRunner
   {
-    ConsoleManager.SetTitle(challenge.Title, challenge.DateTime);
-
-    var part1 = challenge.SolvePart1();
-    ClipboardService.SetText(part1);
-    ConsoleManager.WriteResult(part1);
-
-    var part2 = challenge.SolvePart2();
-    if (!string.IsNullOrWhiteSpace(part2))
+    public static void RunChallenge(IChallenge challenge)
     {
-      ClipboardService.SetText(part2);
-      ConsoleManager.WriteResult(part2, 2);
-    }
+      ConsoleManager.SetTitle(challenge.Title, challenge.DateTime);
 
-    ConsoleManager.DrawImage(File.ReadAllLines($"Assets/ChristmasTree{new Random().Next(1, 4)}.txt"));
+      var part1 = challenge.SolvePart1();
+      ClipboardService.SetText(part1);
+      ConsoleManager.WriteResult(part1);
+
+      var part2 = challenge.SolvePart2();
+      if (!string.IsNullOrWhiteSpace(part2))
+      {
+        ClipboardService.SetText(part2);
+        ConsoleManager.WriteResult(part2, 2);
+      }
+
+      ConsoleManager.DrawImage(File.ReadAllLines($"Assets/ChristmasTree{new Random().Next(1, 4)}.txt"));
+    }
   }
 }
+

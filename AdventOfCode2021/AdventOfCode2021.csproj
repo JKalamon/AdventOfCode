@@ -2,10 +2,21 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="1SonarSweep\SonarSweepSolution.cs" />
+    <Compile Remove="2Dive\DiveSolution.cs" />
+    <Compile Remove="3BinaryDiagnostic\DiveSolution.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="1SonarSweep\SonarSweepSolution.cs" />
+    <None Include="3BinaryDiagnostic\DiveSolution.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="morelinq" Version="3.3.2" />
@@ -13,7 +24,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="2Dive\DiveSolution.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="1SonarSweep\input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="5HydrothermalVenture\input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="4GiantSquid\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="3BinaryDiagnostic\input.txt">

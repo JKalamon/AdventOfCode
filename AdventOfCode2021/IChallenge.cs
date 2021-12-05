@@ -1,13 +1,17 @@
-﻿namespace AdventOfCode2021;
+﻿using System;
 
-internal interface IChallenge
+namespace AdventOfCode2021
 {
-  string Title { get; }
+  internal interface IChallenge
+  {
+    string Title { get; }
 
-  DateTime DateTime { get; }
+    DateTime DateTime { get; }
 
-  string SolvePart1();
+    string SolvePart1();
 
-  string? SolvePart2();
+    string? SolvePart2();
+
+  }
 }
 
