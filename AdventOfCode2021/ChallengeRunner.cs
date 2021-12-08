@@ -10,11 +10,11 @@ namespace AdventOfCode2021
     {
       ConsoleManager.SetTitle(challenge.Title, challenge.DateTime);
 
-      var part1 = challenge.SolvePart1();
+      var part1 = challenge.SolvePart1().ToString() ?? "";
       ClipboardService.SetText(part1);
       ConsoleManager.WriteResult(part1);
 
-      var part2 = challenge.SolvePart2();
+      var part2 = challenge.SolvePart2()?.ToString() ?? "";
       if (!string.IsNullOrWhiteSpace(part2))
       {
         ClipboardService.SetText(part2);

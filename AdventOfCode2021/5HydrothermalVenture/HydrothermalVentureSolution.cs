@@ -60,7 +60,7 @@ namespace AdventOfCode2021
       public bool IsHorizontal => Start.Y == End.Y;
     }
 
-    public string SolvePart1()
+    public object SolvePart1()
     {
       var inputLines = this.commands.Select(x =>
       {
@@ -72,7 +72,7 @@ namespace AdventOfCode2021
       return inputLines.SelectMany(x => x.GetAffectedPoints()).GroupBy(x => x).Where(x => x.Count() >= 2).Count().ToString();
     }
 
-    public string? SolvePart2()
+    public object? SolvePart2()
     {
       var inputLines = this.commands.Select(x =>
       {

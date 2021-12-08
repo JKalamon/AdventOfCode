@@ -55,7 +55,7 @@ namespace AdventOfCode2021
       }
     }
 
-    public string SolvePart1()
+    public object SolvePart1()
     {
       var inputNumbers = this.commands.First().Split(',', StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x));
       var boards = new List<Board>();
@@ -77,7 +77,7 @@ namespace AdventOfCode2021
       return "0";
     }
 
-    public string? SolvePart2()
+    public object? SolvePart2()
     {
       var inputNumbers = this.commands.First().Split(',', StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x));
       var boards = new List<Board>();

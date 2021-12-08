@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -28,21 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="1SonarSweep\input.txt">
+    <None Update="**\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="5HydrothermalVenture\input.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="4GiantSquid\input.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="3BinaryDiagnostic\input.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="2Dive\input.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </None>    
     <None Update="Assets\ChristmasTree3.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

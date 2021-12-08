@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AdventOfCode2021
+﻿namespace AdventOfCode2021
 {
   internal interface IChallenge
   {
@@ -8,9 +6,9 @@ namespace AdventOfCode2021
 
     DateTime DateTime { get; }
 
-    string SolvePart1();
+    object SolvePart1();
 
-    string? SolvePart2();
+    object? SolvePart2();
 
   }
 }
