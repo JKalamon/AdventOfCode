@@ -11,7 +11,7 @@ namespace AdventOfCode2021
     private IEnumerable<Signal> inputFile = File.ReadAllLines("8SevenSegmentSearch/input.txt").Select(x => new Signal(x.Split(" | ")[0].Split(" "), x.Split(" | ")[1].Split(" ")));
 
 
-    public record Signal(string[] Digits, string[] ToBeDecoded);
+    public record Signal(string[] TestDigits, string[] ToBeDecoded);
 
     public record Digit(int Number, char[] Segments);
 
@@ -49,37 +49,106 @@ namespace AdventOfCode2021
       var count = 0;
       this.inputFile.ForEach(signal =>
       {
-        var possibleOutputs = new Dictionary<char, List<char>>()
+        var allLetters = "abcdefg";
+        var possibleMapping = new Dictionary<char, List<char>>()
         {
-          ['a'] = new() { 'a', 'b', 'c', 'd', 'e', 'f', 'g' },
-          ['b'] = new() { 'a', 'b', 'c', 'd', 'e', 'f', 'g' },
-          ['c'] = new() { 'a', 'b', 'c', 'd', 'e', 'f', 'g' },
-          ['d'] = new() { 'a', 'b', 'c', 'd', 'e', 'f', 'g' },
-          ['e'] = new() { 'a', 'b', 'c', 'd', 'e', 'f', 'g' },
-          ['f'] = new() { 'a', 'b', 'c', 'd', 'e', 'f', 'g' },
-          ['g'] = new() { 'a', 'b', 'c', 'd', 'e', 'f', 'g' },
+          ['a'] = allLetters.ToList(),
+          ['b'] = allLetters.ToList(),
+          ['c'] = allLetters.ToList(),
+          ['d'] = allLetters.ToList(),
+          ['e'] = allLetters.ToList(),
+          ['f'] = allLetters.ToList(),
+          ['g'] = allLetters.ToList(),
         };
 
         var digitsGrouped = Digits.GroupBy(x => x.Segments.Length);
+        var knownNumbers = new Dictionary<int, string>();
         digitsGrouped.Where(x => x.Count() == 1).ForEach(x =>
         {
           var digit = x.First();
-          
-          signal.Digits.Where(x => x.Length == digit.Segments.Length).ForEach(aaa =>
+
+          signal.TestDigits.Where(x => x.Length == digit.Segments.Length).ForEach(signalText =>
           {
+            knownNumbers.Add(digit.Number, string.Concat(signalText.OrderBy(x => x)));
+
             digit.Segments.ForEach(x =>
             {
-              possibleOutputs[x] = possibleOutputs[x].Intersect(aaa).ToList();
+              possibleMapping[x] = possibleMapping[x].Intersect(signalText).ToList();
             });
-          });          
+
+            allLetters.Except(digit.Segments).ForEach(x =>
+            {
+              possibleMapping[x] = possibleMapping[x].Except(signalText).ToList();
+            });
+          });
         });
 
-        var output = new int[4];
-        signal.ToBeDecoded;
-        
+        string output = "";
+        for (int i = 0; i < 4; i++)
+        {
+          var signalText = signal.ToBeDecoded[i];
+          var possibleDigits = digitsGrouped.Where(x => x.Key == signalText.Length).First();
+
+          if (possibleDigits.Count() == 1)
+          {
+            output += possibleDigits.Single().Number.ToString();
+
+            continue;
+          }
+
+          //// there are two groups 0, 6, 9 and 2, 3, 5
+          Digit? foundDigit = null;
+          foreach (var digit in possibleDigits)
+          {
+            if (SearchForNumber(digit.Number, signalText, knownNumbers))
+            {
+              if (foundDigit != null)
+              {
+                throw new Exception("Two matches???");
+              }
+              foundDigit = digit;
+            }
+          }
+
+          if (foundDigit == null)
+          {
+            throw new Exception("No matches");
+          }
+
+          output += foundDigit.Number.ToString();          
+        }
+
+        count += int.Parse(output);
       });
 
       return count;
+    }
+
+    private bool SearchForNumber(int potentialNumber, string input, Dictionary<int, string> knownNumbers)
+    {
+      string ao = string.Concat(input.OrderBy(c => c));
+      return potentialNumber switch
+      {
+        0 => !ao.ContainsAll(knownNumbers[4]) && ao.ContainsAll(knownNumbers[1]),
+        6 => !ao.ContainsAll(knownNumbers[1]) && !ao.ContainsAll(knownNumbers[4]) && !ao.ContainsAll(knownNumbers[7]),
+        9 => ao.ContainsAll(knownNumbers[1]) && ao.ContainsAll(knownNumbers[4]),
+        2 => !ao.ContainsAll(knownNumbers[1]) && !ao.ContainsAlmostAll(knownNumbers[4]),
+        3 => ao.ContainsAll(knownNumbers[7]) && ao.ContainsAll(knownNumbers[1]),
+        5 => ao.ContainsAlmostAll(knownNumbers[4]) && !ao.ContainsAll(knownNumbers[1]),
+      };
+    }
+  }
+
+  public static class Ext
+  {
+    public static bool ContainsAll(this string test, string anotherString)
+    {
+      return anotherString.All(x => test.Contains(x));
+    }
+
+    public static bool ContainsAlmostAll(this string test, string anotherString)
+    {
+      return anotherString.Select(x => test.Contains(x)).Count(x => x) == anotherString.Count() - 1;
     }
   }
 }
