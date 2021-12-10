@@ -6,7 +6,7 @@ namespace AdventOfCode2021
   {
     public string Title => "--- Day 8: Seven Segment Search ---";
 
-    public DateTime DateTime => new(2021, 12, 7);
+    public DateTime DateTime => new(2021, 12, 8);
 
     private IEnumerable<Signal> inputFile = File.ReadAllLines("8SevenSegmentSearch/input.txt").Select(x => new Signal(x.Split(" | ")[0].Split(" "), x.Split(" | ")[1].Split(" ")));
 
