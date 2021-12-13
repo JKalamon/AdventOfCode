@@ -9,6 +9,7 @@ namespace AdventOfCode2021
     public static void RunChallenge(IChallenge challenge)
     {
       ConsoleManager.SetTitle(challenge.Title, challenge.DateTime);
+      ConsoleManager.DrawImage(File.ReadAllLines($"Assets/ChristmasTree{new Random().Next(1, 4)}.txt"));
 
       var part1 = challenge.SolvePart1().ToString() ?? "";
       ClipboardService.SetText(part1);
@@ -21,7 +22,7 @@ namespace AdventOfCode2021
         ConsoleManager.WriteResult(part2, 2);
       }
 
-      ConsoleManager.DrawImage(File.ReadAllLines($"Assets/ChristmasTree{new Random().Next(1, 4)}.txt"));
+      Console.SetCursorPosition(0, Console.WindowHeight - 5);
     }
   }
 }
