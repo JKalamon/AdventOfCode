@@ -1,3 +1,3 @@
 ﻿using AdventOfCode2021;
 
-ChallengeRunner.RunChallenge(new ExtendedPolymerizationSolution());
+ChallengeRunner.RunChallenge(new SnailFishSolution());

@@ -71,9 +71,12 @@ namespace AdventOfCode2021
 
     public static void WriteResult(string result, int resultNumber = 1)
     {
+      var left = Console.CursorLeft;
+      var top = Console.CursorTop;
       Console.SetCursorPosition(Console.BufferWidth / 2 + 4, StartLineY + (resultNumber * 2));
       Console.ForegroundColor = resultNumber == 1 ? ConsoleColor.Yellow : ConsoleColor.DarkCyan;
       Console.WriteLine($"Result for part {resultNumber}: {result}");
+      Console.SetCursorPosition(left, top);
     }
 
     private static void WriteCharacter(char input, int numberOfTimes = 1)
