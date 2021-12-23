@@ -1,0 +1,23 @@
+<main class="container">
+  <div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold">Advent of Code</h1>
+    <h2>--- Day 23: Amphipod ---</h2>
+    <div *ngIf="state == 1">
+      <label>Your input</label>
+      <textarea class="form-control" [(ngModel)]="mapInput"></textarea>
+      <div class="btn btn-primary mt-2" (click)="goNext()">Go Next</div>
+    </div>
+
+    <div *ngIf="state == 2">
+      <div *ngFor="let line of map" (keyup.38)="moveUp()">
+        <div *ngFor="let block of line" class="block" [ngClass]="{'selected': block.selected, 'text-plotek': block.character =='#', 'text-info': block.character =='.'}" (click)="select(block)">
+          {{block.character}} &nbsp;
+        </div>
+      </div>
+
+      <h3>Energy {{energyUsed}}</h3>
+      <div class="btn btn-primary" (click)="goNext()">Reset</div>
+    </div>
+  </div>
+
+</main>
