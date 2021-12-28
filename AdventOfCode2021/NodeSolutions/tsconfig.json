@@ -5,8 +5,15 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": false,
+    "target": "ES5",
     "outDir": "dist"
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "**/*.spec.ts", "src/scripts/**/*"]
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "src/scripts/**/*"
+  ]
 }
