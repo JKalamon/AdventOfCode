@@ -1,7 +1,4 @@
-﻿using System.Text;
-using System;
-
-namespace AdventOfCode2021
+﻿namespace AdventOfCode2021
 {
   internal class DiracDiceSolution : IChallenge
   {
@@ -57,8 +54,7 @@ namespace AdventOfCode2021
 
     public object? SolvePart2()
     {
-      var game = new GameState(21, new int[] { 4, 8 }, new int[] { 0, 0 });
-      var rollCount = 0;
+      var game = new GameState(21, new int[] { 6, 1 }, new int[] { 0, 0 });
       var aa = CountWinUniverses(game);
       return aa.Max();
     }
@@ -79,18 +75,11 @@ namespace AdventOfCode2021
           continue;
         }
 
-        var xx = this.CountWinUniverses(gameCopy, (player + 1) % 2);
-        for (int i = 0; i < xx.Length; i++)
+        var otherCount = this.CountWinUniverses(gameCopy, (player + 1) % 2);
+        for (int i = 0; i < otherCount.Length; i++)
         {
-          xx[i] *= possibleOutcome.UniversesCount;
-          if(returnInt[i] > 0 && xx[i] > 0)
-          {
-            returnInt[i] += xx[i];
-          }
-          else
-           {
-            returnInt[i] += xx[i];
-          }
+          otherCount[i] *= possibleOutcome.UniversesCount;
+          returnInt[i] += otherCount[i];          
         }
       }
 
