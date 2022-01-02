@@ -2,9 +2,9 @@
 {
   internal class DiracDiceSolution : IChallenge
   {
-    public string Title => "--- Day 23: Amphipod ---";
+    public string Title => "--- Day 21: Dirac Dice---";
 
-    public DateTime DateTime => new(2021, 12, 23);
+    public DateTime DateTime => new(2021, 12, 21);
 
     public record GameState(int WinPoints, int[] Position, int[] Score)
     {
