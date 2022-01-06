@@ -1,3 +1,5 @@
 ﻿using AdventOfCode2021;
 
-ChallengeRunner.RunChallenge(new TrenchMapSolution());
+var xx= new BeaconScannerSolution();
+xx.SolvePart1();
+//ChallengeRunner.RunChallenge(new BeaconScannerSolution());
