@@ -33,6 +33,11 @@ internal class CalorieCoutingSolution : IChallenge
 			elf.Add(int.Parse(input));
 		}
 
+		if(elf.Count > 0 )
+		{
+			list.Add(elf);
+		}
+
 		return list;
 	}
 }
