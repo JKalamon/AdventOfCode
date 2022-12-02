@@ -63,7 +63,7 @@ internal class RockPaperScissorsSolution : IChallenge
 {
 	public string Title => "--- Day 2: Rock Paper Scissors ---";
 
-	public DateTime DateTime => new(2022, 12, 1);
+	public DateTime DateTime => new(2022, 12, 2);
 
 
 	public object SolvePart1()
