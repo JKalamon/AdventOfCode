@@ -10,8 +10,56 @@ namespace AdventOfCode2021
 
     private string[] commands = File.ReadAllLines("19BeaconScanner/input.txt");
 
+    enum Axis
+    {
+      X,
+      InvertedX,
+      Y,
+      InvertedY,
+      Z,
+      InvertedZ,
+    }
 
-    public record Scanner(List<Point> Beacons)
+    record Direction(Axis X, Axis Y, Axis Z)
+    {
+      public static Direction[] AllDirections()
+      {
+        return new Direction[]
+        {
+          new Direction(Axis.X, Axis.Y, Axis.Z),
+          new Direction(Axis.X, Axis.Z, Axis.InvertedY),
+          new Direction(Axis.X, Axis.InvertedY, Axis.InvertedZ),
+          new Direction(Axis.X, Axis.InvertedZ, Axis.Y),
+
+          new Direction(Axis.Y, Axis.InvertedX, Axis.Z),
+          new Direction(Axis.Y, Axis.Z, Axis.X),
+          new Direction(Axis.Y, Axis.X, Axis.InvertedZ),
+          new Direction(Axis.Y, Axis.InvertedZ, Axis.InvertedX),
+
+          new Direction(Axis.InvertedX, Axis.InvertedY, Axis.Z),
+          new Direction(Axis.InvertedX, Axis.InvertedZ, Axis.InvertedY),
+          new Direction(Axis.InvertedX, Axis.Y, Axis.InvertedZ),
+          new Direction(Axis.InvertedX, Axis.Z, Axis.Y),
+
+          new Direction(Axis.InvertedY, Axis.X, Axis.Z),
+          new Direction(Axis.InvertedY, Axis.InvertedZ, Axis.X),
+          new Direction(Axis.InvertedY, Axis.InvertedX, Axis.InvertedZ),
+          new Direction(Axis.InvertedY, Axis.Z, Axis.InvertedX),
+
+          new Direction(Axis.Z, Axis.Y, Axis.X),
+          new Direction(Axis.Z, Axis.X, Axis.Y),
+          new Direction(Axis.Z, Axis.InvertedY, Axis.X),
+          new Direction(Axis.Z, Axis.InvertedX, Axis.InvertedY),
+
+          new Direction(Axis.InvertedZ, Axis.InvertedY, Axis.InvertedX),
+          new Direction(Axis.InvertedZ, Axis.InvertedX, Axis.Y),
+          new Direction(Axis.InvertedZ, Axis.Y, Axis.X),
+          new Direction(Axis.InvertedZ, Axis.X, Axis.InvertedY),
+        };
+      }
+    }
+
+    record Scanner(List<Point> Beacons)
     {
       public IEnumerable<Pair> GetPairs()
       {
@@ -30,6 +78,10 @@ namespace AdventOfCode2021
 
         return pairs;
       }
+
+      public Point? Position { get; set; }
+
+      public Direction? Direction { get; set; }
     }
 
     public record Pair(Point X, Point Y)
@@ -48,6 +100,7 @@ namespace AdventOfCode2021
         return new Pair(py, px);
       }
 
+      public bool ContainsPoint(Point p) => this.X == p || this.Y == p;
       public double Distance { get; set; } = X.DistanceFromPoint(Y);
     }
 
@@ -80,38 +133,74 @@ namespace AdventOfCode2021
             pair.Add(Pair.CreatePoint(new Point(i, 0, 0, 0), new Point(j, 0, 0, 1)));
         }
 
-      var pairsFromScanner1 = scanners[0].GetPairs();
-      var pairsFromScanner2 = scanners[1].GetPairs();
       var count = 0;
       var commonPart = new List<Pair>();
 
+      scanners[0].Position = new Point(0, 0, 0, 0);
+      while (scanners.Any(x => x.Position == null))
+      {
+
+      }
+
       for (int i = 0; i < scanners.Count; i++)
       {
+        if (scanners[i].Position == null)
+        {
+          continue;
+        }
+
         for (int j = 0; j < scanners.Count; j++)
         {
+          if (i >= j || scanners[j].Position != null)
+            continue;
+
           var scanner1 = scanners[i].GetPairs();
           var scanner2 = scanners[j].GetPairs();
           if (i < j)
           {
-            var commonPairs = scanner1.Where(x => scanner2.Any(y => y.Distance == x.Distance));
+            var commonPairs = scanner1.Where(x => scanner2.Any(y => y.Distance == x.Distance)).ToList();
             if (commonPairs.Count() >= requiredMatches)
             {
+              var commonPairs2 = scanner2.Where(x => scanner1.Any(y => y.Distance == x.Distance)).ToList();
               if (commonPairs.Count() > requiredMatches)
               {
-                Console.WriteLine("test");
+                //// Clear pairs
+                var toRemove = commonPairs.Concat(commonPairs2).SelectMany(x => new[] { x.X, x.Y }).GroupBy(x => x).OrderByDescending(x => x.Count()).Skip(24).Select(x => x.Key);
+                commonPairs.RemoveAll(x => toRemove.Any(pointToRemove => pointToRemove == x.X || pointToRemove == x.Y));
+                commonPairs2.RemoveAll(x => toRemove.Any(pointToRemove => pointToRemove == x.X || pointToRemove == x.Y));
               }
-              var commonPairs2 = scanner2.Where(x => scanner1.Any(y => y.Distance == x.Distance));
 
-              Console.WriteLine($"{i} - {j}, common: " + commonPairs.Count());
-              var aaa = commonPairs.Concat(commonPairs2).SelectMany(x => new[] { x.X, x.Y }).GroupBy(x => x).OrderByDescending(x => x.Count()).ToList();
-              var points = aaa.Select(x => x.Key).Take(numberOfPoints * 2);              
-              var howManyToAdd = points.Where(x => x.Parent == i).Count(x => !x.Counted);
-              if (points.Where(x => x.Parent == j).Count(x => !x.Counted) < howManyToAdd)
+              var pairsToAdd = new List<Pair>();
+              var pairsToAdd2 = new List<Pair>();
+              commonPairs.OrderByDescending(x => x.Distance).ForEach(x =>
               {
-                howManyToAdd = points.Where(x => x.Parent == j).Count(x => !x.Counted);
+                if (!pairsToAdd.Any(y => y.ContainsPoint(x.X) || y.ContainsPoint(x.Y)))
+                {
+                  pairsToAdd.Add(x);
+                }
+              });
+
+              commonPairs2.OrderByDescending(x => x.Distance).ForEach(x =>
+              {
+                if (!pairsToAdd2.Any(y => y.ContainsPoint(x.X) || y.ContainsPoint(x.Y)))
+                {
+                  pairsToAdd2.Add(x);
+                }
+              });
+
+              var howManyToAdd = 0;
+              for (int z = 0; z < pairsToAdd.Count; z++)
+              {
+                if (!pairsToAdd[z].X.Counted && !pairsToAdd2[z].X.Counted)
+                  howManyToAdd++;
+
+                if (!pairsToAdd[z].Y.Counted && !pairsToAdd2[z].Y.Counted)
+                  howManyToAdd++;
               }
 
-              aaa.Select(x => x.Key).ForEach(x => x.Counted = true);
+              var aaa = commonPairs.Concat(commonPairs2).SelectMany(x => new[] { x.X, x.Y }).GroupBy(x => x).OrderByDescending(x => x.Count()).ToList();
+              var points = aaa.Select(x => x.Key).Take(numberOfPoints * 2);
+              points.ForEach(x => x.Counted = true);
               Console.WriteLine($"Adding {howManyToAdd}");
               count += howManyToAdd;
             }
