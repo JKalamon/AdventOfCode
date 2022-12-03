@@ -5,6 +5,4 @@ var piccoloCloud2WebApiData = Registry.GetValue("HKEY_CURRENT_USER\\Software\\Sp
 Console.WriteLine(piccoloCloud2WebApiData);
 return;
 
-var xx= new BeaconScannerSolution();
-xx.SolvePart1();
 //ChallengeRunner.RunChallenge(new BeaconScannerSolution());
