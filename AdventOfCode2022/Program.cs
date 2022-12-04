@@ -1,3 +1,3 @@
 ﻿using AdventOfCode2022;
 
-ChallengeRunner.RunChallenge(new RucksackReorganizationSolution());
+ChallengeRunner.RunChallenge(new CampCleanupSolution());
