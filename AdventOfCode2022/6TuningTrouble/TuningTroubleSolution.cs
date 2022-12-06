@@ -22,12 +22,7 @@ internal class TuningTroubleSolution : IChallenge
 	{
 		for (int i = length - 1; i < input.Length; i++)
 		{
-			var col = new List<char>();
-			foreach (var j in Enumerable.Range(i - length + 1, length))
-			{
-				col.Add(input[j]);
-			}
-
+			var col = input.Skip(i - length + 1).Take(length);
 			if (col.Distinct().Count() == length)
 			{
 				return i + 1;
