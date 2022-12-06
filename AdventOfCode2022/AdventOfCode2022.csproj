@@ -12,6 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="6TuningTrouble\input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="5SupplyStacks\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
