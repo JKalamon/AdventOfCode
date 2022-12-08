@@ -7,7 +7,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+
   <ItemGroup>
+    <None Update="8TreetopTreeHouse\input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="7NoSpaceLeftOnDevice\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
