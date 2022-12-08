@@ -23,6 +23,23 @@ internal class TreetopTreeHouseSolution : IChallenge
 		return counter;
 	}
 
+	public object? SolvePart2()
+	{
+		var score = 0;
+		for (int y = 0; y < Trees.Length; y++)
+		{
+			for (int x = 0; x < Trees[0].Length; x++)
+			{
+				if (IsVisible(x, y) && Score(x, y) > score)
+				{
+					score = Score(x, y);
+				}
+			}
+		}
+
+		return score;
+	}
+
 	private bool IsVisible(int x, int y)
 	{
 		if (x == 0 || x == Trees[y].Length - 1)
@@ -42,7 +59,7 @@ internal class TreetopTreeHouseSolution : IChallenge
 		}
 
 		var bottom = true;
-		for (int z = y + 1; z <  Trees.Length; z++)
+		for (int z = y + 1; z < Trees.Length; z++)
 		{
 			bottom = bottom && current > Trees[z][x];
 		}
@@ -50,8 +67,56 @@ internal class TreetopTreeHouseSolution : IChallenge
 		return left || right || bottom || top;
 	}
 
-	public object? SolvePart2()
+	private int Score(int x, int y)
 	{
-		return null;
+		var current = Trees[y][x];
+		var left = 0;
+		for (int z = x - 1; z >= 0; z--)
+		{
+			if (current <= Trees[y][z])
+			{
+				left++;
+				break;
+			}
+
+			left++;
+		}
+
+		var right = 0;
+		for (int z = x + 1; z < Trees[y].Length; z++)
+		{
+			if (current <= Trees[y][z])
+			{
+				right++;
+				break;
+			}
+
+			right++;
+		}
+
+		var top = 0;
+		for (int z = y - 1; z >= 0; z--)
+		{
+			if (current <= Trees[z][x])
+			{
+				top++;
+				break;
+			}
+
+			top++;
+		}
+
+		var bottom = 0;
+		for (int z = y + 1; z < Trees.Length; z++)
+		{
+			if (current <= Trees[z][x])
+			{
+				bottom++;
+				break;
+			}
+			bottom++;
+		}
+
+		return left * right * bottom * top;
 	}
 }
