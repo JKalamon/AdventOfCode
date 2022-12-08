@@ -24,7 +24,7 @@ internal class NoSpaceLeftOnDeviceSolution : IChallenge
 
 	private FakeDirectory ParseInput()
 	{
-		var root = new FakeDirectory("/", "/");
+		var root = new FakeDirectory("/");
 		var current = root;
 		var lines = File.ReadAllLines("7NoSpaceLeftOnDevice/input.txt");
 		for (int i = 0; i < lines.Length; i++)
@@ -76,24 +76,31 @@ internal class NoSpaceLeftOnDeviceSolution : IChallenge
 
 internal record FakeFile(string Name, int Size);
 
-internal record FakeDirectory(string Name, string Path)
+internal class FakeDirectory
 {
-	public List<FakeFile> Files { get; set; } = new List<FakeFile>();
+	public FakeDirectory(string Name, FakeDirectory? parent = null)
+	{
+		this.Name = Name;
+		this.Parent = parent ?? this;
+	}
 
-	public List<FakeDirectory> Directories { get; set; } = new List<FakeDirectory>();
+	public List<FakeFile> Files { get; init; } = new List<FakeFile>();
 
-	public FakeDirectory Parent { get; set; }
+	public List<FakeDirectory> Directories { get; init; } = new List<FakeDirectory>();
+
+	public FakeDirectory Parent { get; init; }
+
+	public string Name { get; init; }
 
 	public int Size()
-		=> this.Files.Sum(x => x.Size) + this.Directories.Sum(x => x.Size());
+			=> this.Files.Sum(x => x.Size) + this.Directories.Sum(x => x.Size());
 
 	public FakeDirectory UpsertDirectory(string dirName)
 	{
 		var child = this.Directories.FirstOrDefault(x => x.Name == dirName);
 		if (child == null)
 		{
-			child = new FakeDirectory(dirName, this.Path + "/" + dirName);
-			child.Parent = this;
+			child = new FakeDirectory(dirName, this);
 			this.Directories.Add(child);
 		}
 
