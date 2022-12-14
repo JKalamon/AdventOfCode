@@ -7,7 +7,7 @@ internal static class ChallengeRunner
 	public static void RunChallenge(IChallenge challenge)
 	{
 		ConsoleManager.SetTitle(challenge.Title, challenge.DateTime);
-		ConsoleManager.DrawImage(File.ReadAllLines($"Assets/ChristmasTree{new Random().Next(1, 4)}.txt"));
+		ConsoleManager.DrawImage(File.ReadAllLines($"Assets/ChristmasTree{new Random().Next(1, 3)}.txt"));
 
 		var part1 = challenge.SolvePart1().ToString() ?? "";
 		ClipboardService.SetText(part1);

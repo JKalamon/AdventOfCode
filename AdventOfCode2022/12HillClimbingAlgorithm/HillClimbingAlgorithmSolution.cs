@@ -10,8 +10,6 @@ internal class HillClimbingAlgorithmSolution : IChallenge
 
 	private string[] Input = File.ReadAllLines("12HillClimbingAlgorithm/input.txt");
 
-	private HillRecord Current = new HillRecord('S', 0, 0);
-
 	public object SolvePart1()
 	{
 		var list = ParseInput();
@@ -22,38 +20,27 @@ internal class HillClimbingAlgorithmSolution : IChallenge
 
 	public object? SolvePart2()
 	{
-		var least = int.MaxValue;
 		var list = ParseInput();
-		var i = 1;
-		foreach (var a in list.Where(x => x.Height == 0))
+		list.ForEach(x =>
 		{
-			Console.WriteLine($"Processing {i} of {list.Where(x => x.Height == 0).Count()}");
-			list.ForEach(x =>
-			{
-				x.Distance = int.MaxValue;
-				x.Processed = false;
-			});
+			x.Distance = int.MaxValue;
+			x.Processed = false;
+		});
 
-			a.Distance = 0;
-			Dijkstra(list);
-			var dest = list.First(x => x.IsDestination);
-			if (dest.Distance < least)
-				least = dest.Distance;
-
-			i++;
-		}
-
-		return least;
+		list.First(x => x.IsDestination).Distance = 0;
+		Dijkstra(list, true);
+		return list.Where(x => x.Height == 0).OrderBy(x => x.Distance).First().Distance;
 	}
 
-	void Dijkstra(IEnumerable<HillRecord> records)
+	void Dijkstra(IEnumerable<HillRecord> records, bool reverse = false)
 	{
 		while (records.Any(x => !x.Processed && x.Distance < int.MaxValue))
 		{
 			var recordToProcess = records.Where(x => !x.Processed).OrderBy(x => x.Distance).First();
 			foreach (var sib in GetSiblings(records, recordToProcess.X, recordToProcess.Y))
 			{
-				if (CanGo(recordToProcess, sib) && sib.Distance >= recordToProcess.Distance + 1)
+				var canGo = reverse ? CanGo(sib, recordToProcess) : CanGo(recordToProcess, sib);
+				if (canGo && sib.Distance >= recordToProcess.Distance + 1)
 				{
 					sib.Distance = recordToProcess.Distance + 1;
 				}
@@ -84,7 +71,6 @@ internal class HillClimbingAlgorithmSolution : IChallenge
 				list.Add(aa);
 				if (Input[i][j] == 'S')
 				{
-					this.Current = aa;
 					aa.Distance = 0;
 				}
 			}
