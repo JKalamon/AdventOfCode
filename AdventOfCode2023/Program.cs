@@ -1,3 +1,3 @@
 ﻿using AdventOfCode2023;
 
-ChallengeRunner.RunChallenge(new TrebuchetSolution());
+ChallengeRunner.RunChallenge(new CubeConundrumSolution());

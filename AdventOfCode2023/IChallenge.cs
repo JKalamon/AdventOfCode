@@ -4,7 +4,7 @@
 	{
 		string Title { get; }
 
-		string TitleFormat => $"---Day {Day}: {Title} ---";
+		string TitleFormat => $"--- Day {Day}: {Title} ---";
 
 		DateTime DateTime => new(2023, 12, Day);
 
