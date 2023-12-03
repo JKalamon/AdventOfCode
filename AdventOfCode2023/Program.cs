@@ -1,3 +1,12 @@
 ﻿using AdventOfCode2023;
+using Autofac;
 
-ChallengeRunner.RunChallenge(new CubeConundrumSolution());
+var builder = new ContainerBuilder();
+
+builder.RegisterAssemblyTypes(typeof(Program).Assembly)
+							 .Where(t => typeof(IChallenge).IsAssignableFrom(t))
+							 .AsImplementedInterfaces();
+
+using var container = builder.Build();
+
+ChallengeRunner.RunChallenge(container.Resolve<IEnumerable<IChallenge>>().OrderByDescending(x => x.Day).First());

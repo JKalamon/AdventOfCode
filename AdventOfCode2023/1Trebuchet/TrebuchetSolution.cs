@@ -3,13 +3,13 @@ using System.Text.RegularExpressions;
 
 namespace AdventOfCode2023;
 
-internal class TrebuchetSolution : IChallenge
+internal class TrebuchetSolution : ChallengeBase
 {
-	public string Title => "Trebuchet?!";
+	public override string Title => "Trebuchet?!";
 
-	public int Day => 1;
+	public override int Day => 1;
 
-	public object SolvePart1()
+	public override object SolvePart1()
 	{
 		var numbers = new List<int>();
 		foreach (var input in File.ReadAllLines("1TrebuchetSolution/input.txt"))
@@ -21,7 +21,7 @@ internal class TrebuchetSolution : IChallenge
 		return numbers.Sum();
 	}
 
-	public object? SolvePart2()
+	public override object? SolvePart2()
 	{
 		var numbers = new List<int>();
 		var numbersStringDictionary = new Dictionary<string, int>()

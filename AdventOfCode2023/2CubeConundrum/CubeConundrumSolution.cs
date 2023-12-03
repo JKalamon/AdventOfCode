@@ -2,13 +2,13 @@
 
 namespace AdventOfCode2023;
 
-internal class CubeConundrumSolution : IChallenge
+internal class CubeConundrumSolution : ChallengeBase
 {
-	public string Title => "Cube Conundrum";
+	public override string Title => "Cube Conundrum";
 
-	public int Day => 2;
+	public override int Day => 2;
 
-	public object SolvePart1()
+	public override object SolvePart1()
 	{
 		var games = ParseInput();
 		var redMax = 12;
@@ -18,7 +18,7 @@ internal class CubeConundrumSolution : IChallenge
 		return games.Where(x => x.MaxColorUsed("blue") <= blueMax && x.MaxColorUsed("red") <= redMax && x.MaxColorUsed("green") <= greenMax).Sum(x => x.Id);
 	}
 
-	public object? SolvePart2()
+	public override object? SolvePart2()
 	{
 		var games = ParseInput();
 		return games.Select(x =>
@@ -28,7 +28,7 @@ internal class CubeConundrumSolution : IChallenge
 	private IEnumerable<Game> ParseInput()
 	{
 		var retrunVal = new List<Game>();
-		foreach (var input in File.ReadAllLines("2CubeConundrum/input.txt"))
+		foreach (var input in File.ReadAllLines(this.InputPath))
 		{
 			var gameString = input.Split(":")[0];
 			var setsString = input.Split(":")[1];
@@ -47,7 +47,6 @@ internal class CubeConundrumSolution : IChallenge
 
 		return retrunVal;
 	}
-
 
 	internal record Cube(int Number, string Color);
 
