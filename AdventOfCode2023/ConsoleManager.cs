@@ -66,14 +66,21 @@ internal static class ConsoleManager
     });
   }
 
-  public static void WriteResult(string result, int resultNumber = 1)
+  public static void WriteResult(string result, int resultNumber, TimeSpan elapsed, long bytes)
   {
     var left = Console.CursorLeft;
     var top = Console.CursorTop;
-    Console.SetCursorPosition(Console.BufferWidth / 2 + 4, StartLineY + (resultNumber * 2));
-    Console.ForegroundColor = resultNumber == 1 ? ConsoleColor.Yellow : ConsoleColor.DarkCyan;
+    Console.SetCursorPosition(Console.BufferWidth / 2 + 4, StartLineY + (resultNumber * 4));		
+		Console.ForegroundColor = resultNumber == 1 ? ConsoleColor.Yellow : ConsoleColor.DarkCyan;
     Console.WriteLine($"Result for part {resultNumber}: {result}");
-    Console.SetCursorPosition(left, top);
+		
+		Console.ForegroundColor = ConsoleColor.Gray;
+    Console.SetCursorPosition(Console.BufferWidth / 2 + 4, StartLineY + 1 + (resultNumber * 4));
+		Console.WriteLine($"Time: {elapsed.TotalSeconds:F3} seconds");
+		Console.SetCursorPosition(Console.BufferWidth / 2 + 4, StartLineY + 2 + (resultNumber * 4));
+		Console.WriteLine($"Memory: {bytes / 1024} KB");
+
+		Console.SetCursorPosition(left, top);
   }
 
   private static void WriteCharacter(char input, int numberOfTimes = 1)
