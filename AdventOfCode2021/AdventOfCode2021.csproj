@@ -30,9 +30,6 @@
   <ItemGroup>
     <None Update="**\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>    
-    <None Update="Assets\ChristmasTree3.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\ChristmasTree2.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
