@@ -12,6 +12,9 @@
     <None Update="**\input.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="5IfYouGiveASeedAFertilizer\input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\ChristmasTree1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
