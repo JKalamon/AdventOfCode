@@ -1,4 +1,5 @@
 ﻿using MoreLinq;
+using System;
 
 namespace AdventOfCode2023;
 
@@ -25,35 +26,40 @@ internal class IfYouGiveASeedAFertilizerSolution : ChallengeBase
 
 	public override object? SolvePart2()
 	{
-		//// this code is messed up but after running a few times and analysing results and manually norrow input data I got correct answer
-		var almac = Almanac.ParseInput(File.ReadAllLines(this.InputPath));
-		long lowest = long.MaxValue;
-		int howMany = almac.SeedsRange().Count();
-		int process = 0;
-		almac.SeedsRange().Skip(1).Take(1).ForEach(range =>
+		var almanc = Almanac.ParseInput(File.ReadAllLines(this.InputPath));
+
+		var seeds = almanc.SeedsRange();
+		var range = seeds[0];
+		long iterator = long.MaxValue;
+
+		(long lowest, long lowestIterator) FindLowest(Almanac almanc, Range seeds, long iteratorStep, long? startStep = null, long maxIterator = long.MaxValue)
 		{
-			process++;
-			long interator = 3352503326;
-			while (range.IsWithinRange(interator))
+			long lowest = long.MaxValue;
+			long lowestIterator = long.MaxValue;
+			iterator = startStep ?? seeds.Start;
+			var current = seeds.Start;
+			while (seeds.IsWithinRange(iterator) && iterator < maxIterator)
 			{
-				long current = interator;
-				almac.Maps.ForEach(map => current = map.Map(current));
+				current = iterator;
+				almanc.Maps.ForEach(map => current = map.Map(current));
 				if (current < lowest)
 				{
-					interator++;
+					iterator++;
+					lowestIterator = iterator;
 					lowest = current;
-					Console.WriteLine($"{process}/{howMany}: {interator} Low:{lowest}");
 				}
 				else
 				{
-					interator += 2;
+					iterator += iteratorStep;
 				}
-
-				Console.WriteLine($"{process}/{howMany}: {interator} Low:{lowest}");
 			}
-		});
 
-		return lowest;
+			return (lowest, lowestIterator);
+		}
+
+		long skipStep = 5000;
+		var filter = seeds.ToDictionary(x => x, x => FindLowest(almanc, x, skipStep)).OrderBy(x => x.Value.lowest).First();
+		return FindLowest(almanc, filter.Key, 1, filter.Value.lowestIterator - skipStep, filter.Value.lowestIterator + skipStep).lowest;
 	}
 
 	public record Range(long Start, long Count)
@@ -104,7 +110,7 @@ internal class IfYouGiveASeedAFertilizerSolution : ChallengeBase
 		{
 			var output = new Range[Seeds.Length / 2];
 
-			for (int i = 0; i < Seeds.Length; i+=2)
+			for (int i = 0; i < Seeds.Length; i += 2)
 			{
 				output[i / 2] = new Range(Seeds[i], Seeds[i + 1]);
 			}
