@@ -1,0 +1,60 @@
+﻿<html>
+  <head>
+    <script src="part2.js?v=2"></script>
+    <style>
+      .loop {
+        color: red;
+      }
+
+      .marked {
+        color: green;
+      }
+
+      .node {
+        cursor: pointer;
+        height: 15px;
+        width: 15px;
+        margin: 0;
+        line-height: 0;
+      }
+    </style>
+  </head>
+  <body style="background-color: #444; color: #fff">
+    <div style="display: none;">
+      <svg width="15" height="15" id="node-L">
+        <rect x="5" width="5" height="10" style="fill: currentColor" />
+        <rect x="10" y="5" width="10" height="5" style="fill: currentColor" />
+      </svg>
+      <svg width="15" height="15" id="node-.">
+        <rect x="10" y="5" width="3" height="3" style="fill: currentColor" />
+      </svg>
+      <svg width="15" height="15" id="node-J">
+        <rect x="5" y="0" width="5" height="10" style="fill:currentColor;" />
+        <rect x="0" y="5" width="5" height="5" style="fill:currentColor;" />
+      </svg>
+      <svg width="15" height="15" id="node-|">
+        <rect x="5" y="0" width="5" height="20" style="fill:currentColor;" />
+      </svg>
+      <svg width="15" height="15" id="node--">
+        <rect x="0" y="5" width="20" height="5" style="fill:currentColor;" />        
+      </svg>
+      <svg width="15" height="15" id="node-F">
+        <rect x="5" y="5" width="5" height="15" style="fill:currentColor;" />
+        <rect x="10" y="5" width="10" height="5" style="fill:currentColor;" />
+      </svg>
+      <svg width="15" height="15" id="node-S">
+        <rect x="5" y="5" width="5" height="15" style="fill:currentColor;" />
+        <rect x="10" y="5" width="10" height="5" style="fill:currentColor;" />
+      </svg>
+      <svg width="15" height="15" id="node-7">
+        <rect x="5" y="5" width="5" height="10" style="fill:currentColor;" />
+        <rect x="0" y="5" width="5" height="5" style="fill:currentColor;" />
+      </svg>
+    </div>
+
+    <div>Green: <span id="greenCounter"></span></div>
+    <div>Red: <span id="redCounter"></span></div>
+    <div>White: <span id="whiteCounter"></span></div>
+    <div id="maze" style="color: #fff; font-family: 'Consolas'"></div>
+  </body>
+</html>
