@@ -40,4 +40,38 @@ public static partial class Extensions
 	{
 		return items.FirstIndexOf(i => EqualityComparer<T>.Default.Equals(item, i));
 	}
+
+	public static IEnumerable<int> AllIndexOf<T>(this IEnumerable<T> items, Func<T, bool> predicate)
+	{
+		if (items == null) { return []; }
+		if (predicate == null) { return []; }
+
+		var indexList = new List<int>();
+		var index = 0;
+		foreach (var item in items)
+		{
+			if (predicate(item)) { indexList.Add(index); }
+			index++;
+		}
+
+		return indexList;
+	}
+
+	public static int NumberOfDifferences<T>(this IEnumerable<T> items, IEnumerable<T> otherItems)
+	{
+		if (items == null) { return -1; }
+		if (otherItems == null) { return -1; }
+
+		var index = 0;
+		var differences = 0;
+		foreach (var item in items)
+		{
+			if (!EqualityComparer<T>.Default.Equals(item, otherItems.ElementAt(index)))
+				differences++;
+
+			index++;
+		}
+
+		return differences;
+	}
 }
