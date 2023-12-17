@@ -9,4 +9,6 @@ builder.RegisterAssemblyTypes(typeof(Program).Assembly)
 
 using var container = builder.Build();
 
-ChallengeRunner.RunChallenge(container.Resolve<IEnumerable<IChallenge>>().OrderByDescending(x => x.Day).First());
+var challenge = container.Resolve<IEnumerable<IChallenge>>().OrderByDescending(x => x.Day).First();
+challenge.Init();
+ChallengeRunner.RunChallenge(challenge);

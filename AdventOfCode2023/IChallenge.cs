@@ -15,6 +15,8 @@ internal interface IChallenge
 	object SolvePart1();
 
 	object? SolvePart2();
+
+	void Init();
 }
 
 internal abstract class ChallengeBase : IChallenge
@@ -32,4 +34,6 @@ internal abstract class ChallengeBase : IChallenge
 	public abstract object SolvePart1();
 
 	public virtual object? SolvePart2() => null;
+
+	public virtual void Init() { }
 }

@@ -74,4 +74,15 @@ public static partial class Extensions
 
 		return differences;
 	}
+
+	public static uint Sum(this IEnumerable<uint> values)
+	{
+		uint sum = 0;
+		foreach (var value in values)
+		{
+			sum += value;
+		}
+
+		return sum;
+	}
 }

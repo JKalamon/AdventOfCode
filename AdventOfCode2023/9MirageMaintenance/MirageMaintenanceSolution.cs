@@ -12,7 +12,6 @@ internal class MirageMaintenanceSolution : ChallengeBase
 
 	public override object SolvePart2() => Extrapolate(false);
 
-
 	private long Extrapolate(bool nextValue)
 	{
 		var seq = File.ReadAllLines(this.InputPath).Select(x => x.Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(long.Parse).ToArray()).ToArray();
